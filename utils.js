@@ -97,24 +97,20 @@ function response(data, c) {
             "Connection: close\r\n\r\n";
 	c.write(head);
 
-	//console.log(head);
+	console.log(head);
 
 	if (data.path && header.method == 'GET')  {
-		read(c, data);
+		var fileReadStream = fs.createReadStream(data.path);
+		fileReadStream.pipe(c);
+
+		fileReadStream.on('end', function() {
+			c.end();
+		})
 	} else {
 		c.end();
 	}
 }
 
-function read(c, data) {
-	var fileReadStream = fs.createReadStream(data.path);
-
-	fileReadStream.pipe(c);
-
-	fileReadStream.on('end', function() {
-		c.end();
-	})
-}
 
 exports.readHeader = readHeader;
 exports.handler = handler;

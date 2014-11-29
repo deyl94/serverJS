@@ -6,7 +6,7 @@ var stdin = process.stdin;
 var utils = require('./utils.js');
 
 var port = 80;
-var root = './httptest'
+var root = './http'
 var nodes = require('os').cpus().length;
 
 var args = process.argv.slice(2);
